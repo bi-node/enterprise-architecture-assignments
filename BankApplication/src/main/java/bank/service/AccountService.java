@@ -10,15 +10,19 @@ import bank.jms.IJMSSender;
 import bank.jms.JMSSender;
 import bank.logging.ILogger;
 import bank.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
-
-
-
+@Service
 public class AccountService implements IAccountService {
+	@Autowired
 	private IAccountDAO accountDAO;
+	@Autowired
 	private ICurrencyConverter currencyConverter;
+	@Autowired
 	private IJMSSender jmsSender;
+	@Autowired
 	private ILogger logger;
 	
 	public AccountService(){

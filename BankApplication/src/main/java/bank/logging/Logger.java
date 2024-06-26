@@ -1,5 +1,8 @@
 package bank.logging;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Logger implements ILogger{
 
 	public void log(String logstring) {

@@ -9,12 +9,14 @@
         <module name="b" />
         <module name="part-a" />
         <module name="part-a (2)" />
+        <module name="Exercise7" />
         <module name="part-a (1)" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Exercise7" options="-parameters" />
       <module name="b" options="-parameters" />
       <module name="part-a" options="-parameters" />
       <module name="part-a (1)" options="-parameters" />

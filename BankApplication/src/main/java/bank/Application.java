@@ -7,12 +7,16 @@ import bank.domain.AccountEntry;
 import bank.domain.Customer;
 import bank.service.AccountService;
 import bank.service.IAccountService;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 
-
+@SpringBootApplication
 public class Application {
 	public static void main(String[] args) {
-		IAccountService accountService = new AccountService();
+		ApplicationContext context= SpringApplication.run(Application.class, args);
+		IAccountService accountService = context.getBean(IAccountService.class);
 		// create 2 accounts;
 		accountService.createAccount(1263862, "Frank Brown");
 		accountService.createAccount(4253892, "John Doe");
