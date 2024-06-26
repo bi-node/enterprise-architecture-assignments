@@ -1,5 +1,6 @@
-package com.binode.part_b;
+package com.binode.part_b.aspect;
 
+import com.binode.part_b.EmailSender;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
