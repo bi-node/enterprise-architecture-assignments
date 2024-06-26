@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="b" />
         <module name="part-a" />
+        <module name="4" />
         <module name="part-a (2)" />
         <module name="Exercise7" />
         <module name="part-a (1)" />
@@ -16,6 +17,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="4" options="-parameters" />
       <module name="Exercise7" options="-parameters" />
       <module name="b" options="-parameters" />
       <module name="part-a" options="-parameters" />
