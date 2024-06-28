@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  app1:
+    image: lab4
+    environment:
+      DB_HOST: shared-postgres-db
+      DB_PORT: 5432
+      DB_USER: username
+      DB_PASSWORD: password
+      DB_NAME: lab4db
+    networks:
+      - lab4-shared-network
+networks:
+  shared-network:
+    external: true

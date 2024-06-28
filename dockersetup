@@ -1,0 +1,6 @@
+docker run --name lab4EA  -p 5430:5432 -d -e POSTGRES_USER=username -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mainDB postgres
+
+ docker exec -it lab4EA psql -U username -d mainDB
+
+ > docker exec -it lab4EA psql -U username -d mainDB -c "CREATE DATABASE partbdb;"
+
