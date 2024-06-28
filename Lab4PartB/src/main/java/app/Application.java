@@ -3,7 +3,10 @@ package app;
 import domain.Customer;
 import domain.Order;
 import domain.OrderLine;
-import domain.Product;
+import domain.products.Book;
+import domain.products.Cd;
+import domain.products.Dvd;
+import domain.products.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,21 +33,32 @@ public class Application implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-		Product product = new Product();
+		Product product = new Cd();
 		product.setName("Hibernate 3");
 		product.setDescription("Good book on Hibernate");
 		product.setPrice(35.50);
+		((Cd)product).setArtist("John Doe");
 		OrderLine ol1 = new OrderLine(2, product);
 
-		Product product2 = new Product();
+		Dvd product2 = new Dvd();
 		product2.setName("The best of Queen");
 		product2.setDescription("Album from 1995");
 		product2.setPrice(12.98);
+		product2.setGenre("Rock");
 		OrderLine ol2 = new OrderLine(4, product2);
+
+
+		Book product3 = new Book();
+		product3.setName("The best of Queen");
+		product3.setDescription("Album from 1995");
+		product3.setPrice(12.98);
+		product3.setIsbn("Song Book");
+		OrderLine ol3 = new OrderLine(4, product3);
 
 		Order o1 = new Order("234743", "12/10/06", "open");
 		o1.addOrderLine(ol1);
 		o1.addOrderLine(ol2);
+		o1.addOrderLine(ol3);
 
 		Customer c1 = new Customer("Frank", "Brown", "Mainstreet 1",
 				"New york", "43221");
@@ -77,6 +91,16 @@ public class Application implements CommandLineRunner{
 			Product product = orderline.getProduct();
 			System.out.println("Product: " + product.getName() + " "
 					+ product.getDescription() + " " + product.getPrice());
+			if(product instanceof Dvd){
+				System.out.println(((Dvd)product).getGenre());
+			}
+			else if(product instanceof Cd){
+				System.out.println(((Cd)product).getArtist());
+			}
+			else if(product instanceof Book){
+				System.out.println(((Book)product).getIsbn());
+			}
+
 		}
 		System.out.println("\n");
 	}

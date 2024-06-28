@@ -1,12 +1,11 @@
-package domain;
+package domain.products;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class Product {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Product {
 	@Id
 	@GeneratedValue
 	private Long id;

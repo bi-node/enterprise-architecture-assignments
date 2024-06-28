@@ -1,6 +1,7 @@
 package domain;
 
 
+import domain.products.Product;
 import jakarta.persistence.*;
 
 @Entity
