@@ -10,6 +10,10 @@ import com.binode.parta.passengerflight.Flight;
 import com.binode.parta.passengerflight.FlightRepository;
 import com.binode.parta.passengerflight.Passenger;
 import com.binode.parta.passengerflight.PassengerRepository;
+import com.binode.parta.schoolstudent.School;
+import com.binode.parta.schoolstudent.SchoolRepository;
+import com.binode.parta.schoolstudent.Student;
+import com.binode.parta.schoolstudent.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 public class PartAApplication implements CommandLineRunner {
@@ -28,6 +33,11 @@ public class PartAApplication implements CommandLineRunner {
 
     @Autowired
     private PassengerRepository passengerRepository;
+
+    @Autowired
+    private SchoolRepository schoolRepository;
+    @Autowired
+    private StudentRepository studentRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(PartAApplication.class, args);
@@ -72,16 +82,40 @@ public class PartAApplication implements CommandLineRunner {
         //passenger Flight
         System.out.println("\n\n\n\n\n");
 
-        Flight flight1=new Flight(23,"Miami","Fairfield", LocalDate.of(2024,2,2));
-        Flight flight2=new Flight(24,"Texas","California", LocalDate.of(2024,2,18));
-        Passenger passenger=new Passenger("Binod Rasaili");
+        Flight flight1 = new Flight(23, "Miami", "Fairfield", LocalDate.of(2024, 2, 2));
+        Flight flight2 = new Flight(24, "Texas", "California", LocalDate.of(2024, 2, 18));
+        Passenger passenger = new Passenger("Binod Rasaili");
         passenger.addFlight(flight1);
         passenger.addFlight(flight2);
         passengerRepository.save(passenger);
 
         System.out.println(passengerRepository.findAll());
 
+        //school student
+        System.out.println("\n\n\n\n\n");
+        Student student1 = new Student("Sagar", "Maharjan");
+        Student student2 = new Student("Abdoon", "Nur");
+
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+
+        School school = new School("Greenwood High");
+        school.addStudent(student1);
+        school.addStudent(student2);
+
+        schoolRepository.save(school);
+        // Retrieve and display the school with its students
+        School retrievedSchool = schoolRepository.findById(school.getId()).orElse(null);
+        if (retrievedSchool != null) {
+            System.out.println(retrievedSchool.toString());
+            for (Map.Entry<Long, Student> entry : retrievedSchool.getStudents().entrySet()) {
+                System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
+            }
         }
 
+
     }
+}
+
+
 
