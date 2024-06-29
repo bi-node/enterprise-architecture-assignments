@@ -1,12 +1,25 @@
 package bank.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.util.Date;
 
+@Entity
 public class AccountEntry {
+
+	@Id
+	@GeneratedValue
+	private long id;
 	private Date date;
+
 	private double amount;
+
 	private String description;
+
 	private String fromAccountNumber;
+
 	private String fromPersonName;
 	
 	public AccountEntry() {
