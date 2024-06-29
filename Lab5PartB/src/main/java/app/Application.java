@@ -4,26 +4,37 @@ import domain.Appointment;
 import domain.Doctor;
 import domain.Patient;
 import domain.Payment;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import java.util.List;
+
 @SpringBootApplication
-@EnableJpaRepositories("repositories")
-@EntityScan("domain") 
+@EnableJpaRepositories("app")
+@EntityScan("domain")
+
 public class Application implements CommandLineRunner{
-	
+
+	@Autowired
+	AppointmentRepository appointmentRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
 
 	@Override
+	@Transactional
 	public void run(String... args) throws Exception {
+
 		Doctor doctor1 = new Doctor("Chirurg", "Frank", "Brown");
 		Doctor doctor2 = new Doctor("Nurse", "Mary", "Jones");
+		Doctor doctor3 = new Doctor("Surgeon", "Jesus", "Christ");
 
 		Payment payment1 = new Payment("10-10-2008", 12.50);
 		Payment payment2 = new Payment("11-10-2008", 45.00);
@@ -42,11 +53,17 @@ public class Application implements CommandLineRunner{
 		Appointment appointment2 = new Appointment("12-11-2008", patient2,
 				payment2, doctor2);
 		Appointment appointment3 = new Appointment("13-11-2008", patient3,
-				payment3, doctor2);
+				payment3, doctor3);
 		Appointment appointment4 = new Appointment("14-11-2008", patient1,
 				payment4, doctor1);
 
-	}
+		appointmentRepository.save(appointment1);
+		appointmentRepository.save(appointment2);
+		appointmentRepository.save(appointment3);
+		appointmentRepository.save(appointment4);
 
+		List<Appointment> appointments=appointmentRepository.findAll();
+		appointments.forEach(System.out::println);
+	}
 
 }

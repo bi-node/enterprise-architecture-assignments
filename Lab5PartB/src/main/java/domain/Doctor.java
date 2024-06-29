@@ -1,7 +1,13 @@
 package domain;
 
+import jakarta.persistence.*;
 
+@Entity
 public class Doctor {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	private String doctorType;
 	private String firstName;
@@ -16,6 +22,13 @@ public class Doctor {
 		this.lastName = lastName;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getDoctorType() {
 		return doctorType;
@@ -41,4 +54,15 @@ public class Doctor {
 		this.lastName = lastName;
 	}
 
+	@Override
+	public String toString() {
+		return "Doctor{" +
+				"id=" + id +
+				", doctorType='" + doctorType + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				'}';
+	}
+
+	// Getters and setters
 }
