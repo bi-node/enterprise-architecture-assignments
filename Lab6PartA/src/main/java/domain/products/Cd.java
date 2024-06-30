@@ -21,5 +21,9 @@ public class Cd extends Product{
         this.artist = artist;
     }
 
+    @Override
+    public String toString() {
+        return "CD\n"+super.toString()+"\nArtist: "+artist;
 
+    }
 }

@@ -13,7 +13,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import repositories.CdRepository;
+
 import repositories.CustomerRepository;
+import repositories.DVDRepository;
 import repositories.OrderRepository;
 
 import java.util.List;
@@ -27,6 +30,10 @@ public class Application implements CommandLineRunner{
 	OrderRepository orderRepository;
 	@Autowired
 	CustomerRepository customerRepository;
+	@Autowired
+	CdRepository cdRepository;
+	@Autowired
+	DVDRepository dvdRepository;
 	
 
 	public static void main(String[] args) {
@@ -40,11 +47,11 @@ public class Application implements CommandLineRunner{
 		product.setName("Hibernate 3");
 		product.setDescription("Good book on Hibernate");
 		product.setPrice(35.50);
-		((Cd)product).setArtist("John Doe");
+		((Cd)product).setArtist("U2");
 		OrderLine ol1 = new OrderLine(2, product);
 
 		Dvd product2 = new Dvd();
-		product2.setName("The best of Queen");
+		product2.setName("Rocky3");
 		product2.setDescription("Album from 1995");
 		product2.setPrice(12.98);
 		product2.setGenre("Rock");
@@ -86,13 +93,25 @@ public class Application implements CommandLineRunner{
 		orderRepository.save(o2);
 
 
-		//1, find all customer
+//		//1, find all customer
 		System.out.println("\n The All customers.\n-----------------------------------");
 		System.out.println(customerRepository.findAll());
 		System.out.println("\n\n");
 
 		//2. Give all CD’s from U2 with a price smaller than 10 euro
 		System.out.println("\nAll CD's from U2 with price smaller than 10 euro\n--------------------");
+		System.out.println(cdRepository.findByPriceGreaterThanAndArtist(10,"U2"));
+		System.out.println("\n\n");
+
+		//3. Give all customers with zip code 2389HJ
+		System.out.println("\n all customers with zip code 2389H\n-----------------------------------");
+		System.out.println(customerRepository.findAllByAddressZip("58954"));
+		System.out.println("\n\n");
+
+		//4. Give all customers who ordered a DVD with the name Rocky3
+		System.out.println("\n Give all customers who ordered a DVD with the name Rocky3\n-----------------------------------");
+		System.out.println(dvdRepository.findAllByName("Rocky3"));
+		System.out.println("\n\n");
 
 
 
