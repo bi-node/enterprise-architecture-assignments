@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-
+@NamedQuery(name = "Customer.findAllByAddressCity", query = "select c from Customer c where c.address.city=:city")
 public class Customer {
 
 	@Id

@@ -44,8 +44,8 @@ public class Application implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 
 		Product product = new Cd();
-		product.setName("Hibernate 3");
-		product.setDescription("Good book on Hibernate");
+		product.setName("Song CD Album");
+		product.setDescription("Good collection of song album");
 		product.setPrice(35.50);
 		((Cd)product).setArtist("U2");
 		OrderLine ol1 = new OrderLine(2, product);
@@ -113,6 +113,16 @@ public class Application implements CommandLineRunner{
 		System.out.println(dvdRepository.findAllByName("Rocky3"));
 		System.out.println("\n\n");
 
+		//Named Queries
+		//5. List all customer based on city
+		System.out.println("\n Give all customers based on address for eg city\n-----------------------------------");
+		System.out.println(customerRepository.findAllByAddressCity("New york"));
+		System.out.println("\n\n");
+
+		//6. List all Cd by artist name
+		System.out.println("\n List all Cd by artist name\n-----------------------------------");
+		System.out.println(cdRepository.findAllByArtist("U2"));
+		System.out.println("\n\n");
 
 
 
