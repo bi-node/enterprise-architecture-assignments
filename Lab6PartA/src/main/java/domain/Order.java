@@ -77,4 +77,13 @@ public class Order {
 		return orderLines.add(ol);
 	}
 
+	@Override
+	public String toString() {
+		return "Order{" +
+				"id=" + id +
+				", orderNumber='" + orderNumber + '\'' +
+				", date='" + date + '\'' +
+				", status='" + status + '\'' +
+				'}';
+	}
 }

@@ -1,5 +1,6 @@
 package app;
 
+
 import domain.Customer;
 import domain.Order;
 import domain.OrderLine;
@@ -13,13 +14,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import repositories.CdRepository;
-
-import repositories.CustomerRepository;
-import repositories.DVDRepository;
-import repositories.OrderRepository;
+import repositories.*;
 
 import java.util.List;
+
 
 @SpringBootApplication
 @EnableJpaRepositories("repositories")
@@ -34,6 +32,8 @@ public class Application implements CommandLineRunner{
 	CdRepository cdRepository;
 	@Autowired
 	DVDRepository dvdRepository;
+	@Autowired
+	AddressRepository addressRepository;
 	
 
 	public static void main(String[] args) {
@@ -86,13 +86,13 @@ public class Application implements CommandLineRunner{
 		OrderLine ol4=new OrderLine(2,product1);
 		Order o2=new Order("589556", "05/06/19", "closed");
 		o2.addOrderLine(ol4);
-		Customer c2 = new Customer("John", "Doe", "North Street 1",
+		Customer c2 = new Customer("John", "Doe", "Amsterdam",
 				"New Castle", "58954");
 		c2.addOrder(o2);
 		o2.setCustomer(c2);
 		orderRepository.save(o2);
 
-
+		//Methods Queries
 //		//1, find all customer
 		System.out.println("\n The All customers.\n-----------------------------------");
 		System.out.println(customerRepository.findAll());
@@ -124,12 +124,42 @@ public class Application implements CommandLineRunner{
 		System.out.println(cdRepository.findAllByArtist("U2"));
 		System.out.println("\n\n");
 
+		//JPQL queries
+		//7.Find all order which are closed
+		System.out.println("\n Find all order which are closed\n-----------------------------------");
+		System.out.println(orderRepository.findByStatus("closed"));
+		System.out.println("\n\n");
+
+		//8. Give the first and lastnames of all customers who live in Amsterdam.
+		System.out.println("\n first and lastnames of all customers who live in Amsterdam\n-----------------------------------");
+		List< Object[]> results =customerRepository.findByStreet("Amsterdam");
+		System.out.println("FirstName\t\t"+"LastName");
+		for(Object[] result:results) {
+			System.out.println((String) result[0]+"\t\t"+(String) result[1]);
+		}
+		System.out.println("\n\n");
 
 
+		//9. Give the order numbers of all orders from customers who live in a certain city (city is a parameter).
+		System.out.println("\nOrder numbers of all orders from customers who live in a certain city");
+		System.out.println(orderRepository.findOrdersFromCity("New Castle"));
+		System.out.println("\n\n");
 
+		//10. Give all CD’s from a certain artist with a price bigger than a certain amount (
+		System.out.println("\nGive all CD’s from a certain artist with a price bigger than a certain amount ");
+		System.out.println(cdRepository.findbypriceandArtist("U2", 50));
+		System.out.println("\n\n");
 
+		//**********Native Query*******************//
+		//11. Give all addresses in Amsterdam
+		System.out.println("\nGive all address from certain city ");
+		System.out.println(addressRepository.findbyCity("New york"));
+		System.out.println("\n\n");
 
+		//12. Give all CD’s from U2.
+		System.out.println("\nGive CD from artist ");
 
+		System.out.println("\n\n");
 
 
 
