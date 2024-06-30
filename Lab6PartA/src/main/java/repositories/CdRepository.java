@@ -3,12 +3,13 @@ package repositories;
 import domain.products.Cd;
 import domain.products.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CdRepository extends JpaRepository<Cd,Long> {
+public interface CdRepository extends JpaRepository<Cd,Long>, JpaSpecificationExecutor<Cd> {
     List<Cd> findByPriceGreaterThanAndArtist(double price, String artistName);
     List<Cd> findAllByArtist(@Param("name") String artistName);
 

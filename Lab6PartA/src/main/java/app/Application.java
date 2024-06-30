@@ -13,8 +13,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import repositories.*;
+import repositories.specification.CdSpecification;
+import repositories.specification.CustomerSpecification;
+import repositories.specification.OrderSpecification;
 
 import java.util.List;
 
@@ -161,7 +165,29 @@ public class Application implements CommandLineRunner{
 		System.out.println(cdRepository.findByArtist("U2"));
 		System.out.println("\n\n");
 
+		//**********specification*************
+		//13. Give the order numbers of all orders with status ‘open’
+		System.out.println("\nStatus open order\n---------------------------------------------- ");
+		Specification<Order> orderStatus= OrderSpecification.hasInStatus("open");
+		List<Order> specorder = orderRepository.findAll(orderStatus);
+		System.out.println(specorder);
+		System.out.println("\n\n");
 
+		//13. Give all customers who live in NewYork
+		System.out.println("\nCus live in city\n---------------------------------------------- ");
+		Specification<Customer> cusspec= CustomerSpecification.customerFromAdressCity("New Castle");
+		List<Customer> liscus = customerRepository.findAll(cusspec);
+		System.out.println(liscus);
+		System.out.println("\n\n");
+
+
+		//14. Give all CD’s from a certain artist with a price bigger than a certain
+		// amount (artist and amount are parameter2
+		System.out.println("CD with author and price ");
+		Specification<Cd> cdAutherSpec= CdSpecification.hasArtist("U2");
+		Specification<Cd> CdPriceGreaterThan=CdSpecification.priceGreaterThan(20);
+		List<Cd> cdList=cdRepository.findAll(Specification.where(cdAutherSpec).and(CdPriceGreaterThan));
+		System.out.println(cdList);
 
 
 
