@@ -158,8 +158,10 @@ public class Application implements CommandLineRunner{
 
 		//12. Give all CD’s from U2.
 		System.out.println("\nGive CD from artist ");
-
+		System.out.println(cdRepository.findByArtist("U2"));
 		System.out.println("\n\n");
+
+
 
 
 
