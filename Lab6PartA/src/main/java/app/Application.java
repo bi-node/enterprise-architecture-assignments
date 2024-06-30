@@ -13,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import repositories.CustomerRepository;
 import repositories.OrderRepository;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public class Application implements CommandLineRunner{
 
 	@Autowired
 	OrderRepository orderRepository;
+	@Autowired
+	CustomerRepository customerRepository;
 	
 
 	public static void main(String[] args) {
@@ -80,9 +83,16 @@ public class Application implements CommandLineRunner{
 				"New Castle", "58954");
 		c2.addOrder(o2);
 		o2.setCustomer(c2);
+		orderRepository.save(o2);
 
 
+		//1, find all customer
+		System.out.println("\n The All customers.\n-----------------------------------");
+		System.out.println(customerRepository.findAll());
+		System.out.println("\n\n");
 
+		//2. Give all CD’s from U2 with a price smaller than 10 euro
+		System.out.println("\nAll CD's from U2 with price smaller than 10 euro\n--------------------");
 
 
 

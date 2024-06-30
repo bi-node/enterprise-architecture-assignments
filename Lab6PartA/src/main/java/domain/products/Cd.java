@@ -20,4 +20,6 @@ public class Cd extends Product{
     public void setArtist(String artist) {
         this.artist = artist;
     }
+
+
 }

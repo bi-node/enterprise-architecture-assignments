@@ -70,4 +70,14 @@ public class Customer {
 		return removed;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer {" + "\n" +
+				"  id: " + id + "\n" +
+				"  firstName: '" + firstName + '\'' + "\n" +
+				"  lastName: '" + lastName + '\'' + "\n" +
+				"  address: " + address.getStreet() + "\n" +
+				'}';
+	}
+
 }
