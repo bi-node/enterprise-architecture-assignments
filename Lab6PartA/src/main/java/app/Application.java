@@ -67,6 +67,34 @@ public class Application implements CommandLineRunner{
 
 		orderRepository.save(o1);
 
+		Book product1=new Book();
+		product1.setDescription("Nice Book");
+		product1.setName("God Father");
+		product1.setPrice(56.05);
+		product1.setIsbn("4581251");
+
+		OrderLine ol4=new OrderLine(2,product1);
+		Order o2=new Order("589556", "05/06/19", "closed");
+		o2.addOrderLine(ol4);
+		Customer c2 = new Customer("John", "Doe", "North Street 1",
+				"New Castle", "58954");
+		c2.addOrder(o2);
+		o2.setCustomer(c2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		List<Order> orders=orderRepository.findAll();
 		for (Order order:orders){
 			printOrder(order);
