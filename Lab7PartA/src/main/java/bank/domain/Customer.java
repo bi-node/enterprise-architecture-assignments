@@ -54,7 +54,9 @@ public class Customer {
 		this.account = account;
 	}
 
-
+	public long getId() {
+		return id;
+	}
 
 
 }

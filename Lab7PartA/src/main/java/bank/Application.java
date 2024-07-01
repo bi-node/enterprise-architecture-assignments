@@ -24,7 +24,24 @@ public class Application implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		bankService.createCustomerAndAccount(12, "Jack Bauer", "jbauer@yahoo.com","1223");
+		try{
+			bankService.createCustomerAndAccount(12, "Jack Bauer", "jbauer@yahoo.com","1223");
+		}
+		catch(Exception e){
+			System.out.println("Error: " + e.getMessage());
+		}
+		finally {
+			System.out.println("Finally finished");
+		}
+
+		try{
 		bankService.createCustomerAndAccount(14, "Frank Brown", "frankbrown@gmail.com","1248");
+	}
+	catch(Exception e){
+		System.out.println("Error: " + e.getMessage());
+		}
+		finally {
+			System.out.println("Finally finished");
+		}
 	}
 }
