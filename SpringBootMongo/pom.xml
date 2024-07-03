@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>bank</groupId>
-	<artifactId>Lab7PartA</artifactId>
+	<artifactId>Lab8PartA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Lab7</name>
-	<description>Lab7</description>
+	<name>Lab8</name>
+	<description>Lab8</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

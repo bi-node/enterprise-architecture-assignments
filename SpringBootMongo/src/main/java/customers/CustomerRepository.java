@@ -16,5 +16,7 @@ public interface CustomerRepository extends MongoRepository<Customer, Integer> {
     @Query("{email : :#{#email}}")
     Customer findCustomerWithEmail(@Param("email") String email);
 
+    Customer findByName(String name);
+
 }
 

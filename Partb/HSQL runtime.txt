@@ -1,0 +1,2 @@
+Time to store 10,000 Persons: 5424ms
+Time to retrieve 10,000 Persons: 124ms
