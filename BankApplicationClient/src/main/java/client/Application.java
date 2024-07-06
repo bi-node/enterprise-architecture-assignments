@@ -20,7 +20,7 @@ public class Application implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 		// add Account
-		restTemplate.postForLocation(serverUrl, new AccountCreateRequest(1387868687, "Kush Raj Rimal"));
+		restTemplate.postForLocation(serverUrl, new AccountCreateRequest(2525252, "Binod Rasaili"));
 
 		// get account
 		AccountDto accountDto= restTemplate.getForObject(serverUrl+"/{accountNumber}", AccountDto.class, 1387868687);
@@ -63,7 +63,7 @@ public class Application implements CommandLineRunner {
 		System.out.println(accountDto.getBalance());
 
 		// withdraw
-		restTemplate.postForLocation(serverUrl+"/{accountNumber}/transfer", new FundTransferRequest(1263862, 5,"Just testing client"),1387868687);
+		restTemplate.postForLocation(serverUrl+"/{accountNumber}/transfer-money", new FundTransferRequest(1263862, 5,"Just testing client"),1387868687);
 
 		// get account
 		accountDto= restTemplate.getForObject(serverUrl+"/{accountNumber}", AccountDto.class, 1387868687);
