@@ -4,18 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import generated.Person;
-
-import java.util.Optional;
-
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
 	@Autowired
-	GreetingClient greetingClient;
+	CalculatorClient calculatorClient;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -23,12 +17,9 @@ public class Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Person person = new Person();
-		person.setFirstName("Frank");
-		person.setLastName("Brown");
-		System.out.println(greetingClient.getMessage(person));
+		System.out.println("The sum of two numbers is: "+ calculatorClient.add(4, 5));
+		System.out.println("The difference of two numbers is: "+ calculatorClient.difference(4, 5));
+		System.out.println("The multiply of two numbers is: "+ calculatorClient.product(4, 5));
+
 	}
-
 }
-
-
