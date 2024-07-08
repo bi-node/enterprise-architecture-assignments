@@ -38,7 +38,7 @@ public class Application implements CommandLineRunner {
 		accountService.withdrawEuros(1263862, 230);
 
 		//use account 2;
-		accountService.deposit(4253892, 12450);
+		accountService.deposit(4253892, 12000);
 		accountService.depositEuros(4253892, 200);
 		accountService.transferFunds(4253892, 1263862, 100, "payment of invoice 10232");
 
