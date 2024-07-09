@@ -14,7 +14,7 @@ public class Sender<T> {
     @Autowired
     KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, T message) throws JsonProcessingException {
+    public void sendDeposit(String topic, T message) throws JsonProcessingException {
        try {
            ObjectMapper mapper = new ObjectMapper();
            String msgtoString = mapper.writeValueAsString(message);
@@ -24,7 +24,29 @@ public class Sender<T> {
            System.out.println("Couldn't parse message");
        }
 
+    }
 
+    public void createAccount(String topic, T message) throws JsonProcessingException {
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String msgtoString=mapper.writeValueAsString(message);
+            kafkaTemplate.send(topic, msgtoString);
 
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void withdraw(String topic, T message) throws JsonProcessingException {
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String msgtoString=mapper.writeValueAsString(message);
+            kafkaTemplate.send(topic, msgtoString);
+
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

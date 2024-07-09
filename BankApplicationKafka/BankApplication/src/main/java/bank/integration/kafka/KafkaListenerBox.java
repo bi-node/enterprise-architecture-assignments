@@ -1,6 +1,8 @@
 package bank.integration.kafka;
 
+import bank.kafkaDtos.CreateAccountRequest;
 import bank.kafkaDtos.DepositRequest;
+import bank.kafkaDtos.WithdrawRequest;
 import bank.service.AccountService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,6 +29,42 @@ public class KafkaListenerBox {
             double amount = depositRequest.getAmount();
             System.out.println("Depositing amount to the account "+accountNumber);
             accountService.deposit(accountNumber, amount);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    @KafkaListener(topics = {"createAccountMsg"})
+    public void accountCreation(@Payload String request)
+    {
+        try {
+
+
+            ObjectMapper mapper = new ObjectMapper();
+            CreateAccountRequest createRequest = mapper.readValue(request, CreateAccountRequest.class);
+            long accountNumber = createRequest.getAccountNumber();
+            String name = createRequest.getCustomerName();
+            System.out.println("Creating account , customer name  "+accountNumber+" "+name);
+            accountService.createAccount(accountNumber, name);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    @KafkaListener(topics = {"withdrawMsg"})
+    public void withdrawAmount(@Payload String request)
+    {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            WithdrawRequest withdrawRequest = mapper.readValue(request, WithdrawRequest.class);
+            long accountNumber = withdrawRequest.getAccountNumber();
+            double amount = withdrawRequest.getAmount();
+            System.out.println("withdrawing amount  "+accountNumber+" "+amount);
+            accountService.withdraw(accountNumber, amount);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
