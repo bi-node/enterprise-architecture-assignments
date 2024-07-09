@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/Lab11Sender/pom.xml" />
         <option value="$PROJECT_DIR$/Lab11Receiver/pom.xml" />
+        <option value="$PROJECT_DIR$/KafkaSender/pom.xml" />
+        <option value="$PROJECT_DIR$/KafkaReceiver/pom.xml" />
       </list>
     </option>
   </component>

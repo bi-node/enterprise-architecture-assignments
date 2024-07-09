@@ -1,4 +1,4 @@
-package jms;
+package bank.kafkaDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Calculator {
-    int value;
-    String operator;
+
+public class DepositRequest {
+    private long accountNumber;
+    private double amount;
+
+
 }

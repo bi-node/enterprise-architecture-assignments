@@ -7,13 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Lab11Receiver" />
         <module name="Lab11Sender" />
+        <module name="Lab11Receiver" />
+        <module name="KafkaSender" />
+        <module name="KafkaReceiver" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="KafkaReceiver" options="-parameters" />
+      <module name="KafkaSender" options="-parameters" />
       <module name="Lab11Receiver" options="-parameters" />
       <module name="Lab11Sender" options="-parameters" />
     </option>

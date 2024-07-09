@@ -1,4 +1,4 @@
-package jms;
+package com.binode.clientapp.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Calculator {
-    int value;
-    String operator;
+public class CreateAccountRequest {
+    private long accountNumber;
+    private String customerName;
 }
