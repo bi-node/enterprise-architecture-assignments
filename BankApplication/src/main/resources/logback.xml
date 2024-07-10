@@ -9,8 +9,8 @@
 			<level>TRACE</level>
 		</filter>
 	</appender>
-	<logger name="org.springframework" level="ERROR" />
-	<logger name="ch.qos.logback" level="ERROR" />
+	<loggerDemo name="org.springframework" level="ERROR" />
+	<loggerDemo name="ch.qos.logback" level="ERROR" />
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>

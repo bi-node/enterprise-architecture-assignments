@@ -7,11 +7,13 @@ import bank.domain.Account;
 import bank.domain.Customer;
 import bank.dto.AccountDto;
 import bank.integration.jms.JMSSender;
-import bank.integration.logging.Logger;
+import bank.integration.logging.LoggerDemo;
 import bank.mapper.AccountMapper;
 import bank.repository.AccountRepository;
 import jakarta.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ import java.util.Optional;
 @Service
 public class AccountServiceImpl implements AccountService {
 	@Autowired
+	private static final Logger log = LoggerFactory.getLogger(AccountServiceImpl.class);
+	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 
 	@Autowired
@@ -32,13 +36,12 @@ public class AccountServiceImpl implements AccountService {
 	private AccountRepository accountRepository;
 	private CurrencyConverter currencyConverter;
 	private JMSSender jmsSender;
-	private Logger logger;
 
-	public AccountServiceImpl(AccountRepository accountRepository, CurrencyConverter currencyConverter, JMSSender jmsSender, Logger logger) {
+
+	public AccountServiceImpl(AccountRepository accountRepository, CurrencyConverter currencyConverter, JMSSender jmsSender, LoggerDemo loggerDemo) {
 		this.accountRepository = accountRepository;
 		this.currencyConverter = currencyConverter;
 		this.jmsSender = jmsSender;
-		this.logger = logger;
 	}
 
 	public AccountDto createAccount(long accountNumber, String customerName) {
@@ -46,13 +49,23 @@ public class AccountServiceImpl implements AccountService {
 		Customer customer = new Customer(customerName);
 		account.setCustomer(customer);
 		accountRepository.save(account);
-		logger.log("createAccount with parameters accountNumber= " + accountNumber + " , customerName= " + customerName);
+		//logger.log("createAccount with parameters accountNumber= " + accountNumber + " , customerName= " + customerName);
 		// Calling publisher event before returning
 		eventPublisher.publishEvent(new AddBankEvent(accountNumber, "XYZ Bank", "Account created", customerName, AddBankEvent.EventType.CREATE_ACCOUNT));
 		//adding trace record
 		TraceRecord traceRecord = new TraceRecord(LocalDateTime.now(), accountNumber, "CREATE_ACCOUNT", 0);
 		traceRecordRepository.save(traceRecord);
+
+		//logging
+		log.trace("Trace record: {}", traceRecord);
+
+
+
+
 		return AccountMapper.accountToAccountDto(account);
+
+
+
 	}
 
 
@@ -63,12 +76,14 @@ public class AccountServiceImpl implements AccountService {
 			Account account = accountOpt.get();
 			account.deposit(amount);
 			accountRepository.save(account);
-			logger.log("deposit with parameters accountNumber= " + accountNumber + " , amount= " + amount);
+
 			eventPublisher.publishEvent(new AddBankEvent(accountNumber, "XYZ Bank", amount + " deposited to your account", account.getCustomer().getName(), AddBankEvent.EventType.DEPOSIT));
 			// Save Trace Record
 			TraceRecord traceRecord = new TraceRecord(LocalDateTime.now(), accountNumber, "DEPOSIT", amount);
 			traceRecordRepository.save(traceRecord);
 
+			//logging
+			log.info("Trace record: {}", traceRecord);
 
 			if (amount > 10000) {
 				jmsSender.sendJMSMessage("Deposit of $ " + amount + " to account with accountNumber= " + accountNumber);
@@ -96,11 +111,13 @@ public class AccountServiceImpl implements AccountService {
 			Account account = accountOpt.get();
 			account.withdraw(amount);
 			accountRepository.save(account);
-			logger.log("withdraw with parameters accountNumber= " + accountNumber + " , amount= " + amount);
+
 			eventPublisher.publishEvent(new AddBankEvent(accountNumber, "XYZ Bank", amount + " withdrawn from your account", account.getCustomer().getName(), AddBankEvent.EventType.WITHDRAW));
 			// Save Trace Record
 			TraceRecord traceRecord = new TraceRecord(LocalDateTime.now(), accountNumber, "WITHDRAW", amount);
 			traceRecordRepository.save(traceRecord);
+			//logging
+			log.debug("Trace record: {}", traceRecord);
 		}
 	}
 	public void depositEuros(long accountNumber, double amount) {
@@ -110,7 +127,7 @@ public class AccountServiceImpl implements AccountService {
 			double amountDollars = currencyConverter.euroToDollars(amount);
 			account.deposit(amountDollars);
 			accountRepository.save(account);
-			logger.log("depositEuros with parameters accountNumber= " + accountNumber + " , amount= " + amount);
+
 			if (amountDollars > 10000) {
 				jmsSender.sendJMSMessage("Deposit of $ " + amount + " to account with accountNumber= " + accountNumber);
 			}
@@ -124,7 +141,7 @@ public class AccountServiceImpl implements AccountService {
 			double amountDollars = currencyConverter.euroToDollars(amount);
 			account.withdraw(amountDollars);
 			accountRepository.save(account);
-			logger.log("withdrawEuros with parameters accountNumber= " + accountNumber + " , amount= " + amount);
+
 		}
 	}
 
@@ -138,7 +155,7 @@ public class AccountServiceImpl implements AccountService {
 			fromAccount.transferFunds(toAccount, amount, description);
 			accountRepository.save(fromAccount);
 			accountRepository.save(toAccount);
-			logger.log("transferFunds with parameters fromAccountNumber= " + fromAccountNumber + " , toAccountNumber= " + toAccountNumber + " , amount= " + amount + " , description= " + description);
+
 			eventPublisher.publishEvent(new AddBankEvent(fromAccountNumber, "XYZ Bank", amount + " transferred to account " + toAccountNumber, fromAccount.getCustomer().getName(), AddBankEvent.EventType.TRANSFER_FUNDS));
 			if (amount > 10000) {
 				jmsSender.sendJMSMessage("TransferFunds of $ " + amount + " from account with accountNumber= " + fromAccountNumber + " to account with accountNumber= " + toAccountNumber);
@@ -147,6 +164,8 @@ public class AccountServiceImpl implements AccountService {
 		// Save Trace Record
 		TraceRecord traceRecord = new TraceRecord(LocalDateTime.now(), fromAccountNumber, "TRANSFER_FUNDS", amount);
 		traceRecordRepository.save(traceRecord);
+		//logging
+		log.warn("Trace record: {}", traceRecord);
 	}
 
 	public void allAccountDetails()

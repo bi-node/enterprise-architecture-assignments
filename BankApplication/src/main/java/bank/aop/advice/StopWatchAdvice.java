@@ -1,6 +1,6 @@
 package bank.aop.advice;
 
-import bank.integration.logging.Logger;
+import bank.integration.logging.LoggerDemo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -13,10 +13,10 @@ import java.util.UUID;
 @Aspect
 @Configuration
 public class StopWatchAdvice {
-    final Logger logger;
+    final LoggerDemo loggerDemo;
 
-    public StopWatchAdvice(Logger logger) {
-        this.logger = logger;
+    public StopWatchAdvice(LoggerDemo loggerDemo) {
+        this.loggerDemo = loggerDemo;
     }
     @Around("execution(* bank.service.*.*(..))")
     public Object profile (ProceedingJoinPoint call) throws Throwable{
@@ -24,7 +24,7 @@ public class StopWatchAdvice {
         clock.start(call.toShortString());
         Object object= call.proceed();
         clock.stop();
-        logger.log(clock.prettyPrint());
+        loggerDemo.log(clock.prettyPrint());
         return object;
     }
 }
