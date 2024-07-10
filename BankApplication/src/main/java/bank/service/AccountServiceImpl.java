@@ -8,9 +8,11 @@ import bank.integration.logging.Logger;
 import bank.mapper.AccountMapper;
 import bank.repository.AccountRepository;
 import jakarta.transaction.Transactional;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 @Transactional
 @Service
@@ -110,6 +112,19 @@ public class AccountServiceImpl implements AccountService {
 			if (amount > 10000) {
 				jmsSender.sendJMSMessage("TransferFunds of $ " + amount + " from account with accountNumber= " + fromAccount + " to account with accountNumber= " + toAccount);
 			}
+		}
+	}
+
+	public void allAccountDetails()
+	{
+		List<Account> accounts=accountRepository.findAll();
+		System.out.println("*******************ACCOUNT DETAILS**********************");
+		for(Account account: accounts)
+		{
+			System.out.println("Account Number: " +account.getAccountNumber());
+			System.out.println("Customer Name: " + account.getCustomer().getName());
+			System.out.println("Total Balance: " + account.getBalance());
+			System.out.println("****************EOD*********************************");
 		}
 	}
 

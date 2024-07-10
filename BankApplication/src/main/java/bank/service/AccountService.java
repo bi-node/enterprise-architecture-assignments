@@ -22,5 +22,6 @@ public interface AccountService {
     public void withdrawEuros (long accountNumber, double amount);
 
     public void transferFunds(long fromAccountNumber, long toAccountNumber, double amount, String description);
+    public void allAccountDetails();
 
 }
