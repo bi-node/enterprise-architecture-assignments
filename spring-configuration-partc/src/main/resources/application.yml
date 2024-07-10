@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: part c
+custom:
+  application-name: demo
+  server-name: localhost
+  url: localhost:8090
+  version: 1.2
+  countries:
+    - Nepal
+    - US
+    - Netherlands
+  user:
+    firstname: Binod
+    lastname: Rasaili
+    password: binodrasaili
+    username: binodrasaili

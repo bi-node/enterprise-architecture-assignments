@@ -1,0 +1,10 @@
+spring.application.name=spring-configuration-partc
+custom.application-name=part c Lab
+custom.server-name=localhost
+custom.url=http://localhost:8050
+custom.version=1.2
+custom.countries=Nepal, US, Netherlands
+custom.user.firstname=Binod
+custom.user.lastname=Rasaili
+custom.user.password=12345
+custom.user.username=binod.rasaili
